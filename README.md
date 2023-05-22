@@ -1,9 +1,5 @@
 # aws-summit-demo
 
-Class: AWS
-Created: May 19, 2023 2:40 PM
-Reviewed: No
-
 - [open a cloud9 to develop your code](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/amazon-linux-install.html)
 [https://tinyurl.com/2tjze7vv](https://tinyurl.com/2tjze7vv)
 
