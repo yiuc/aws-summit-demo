@@ -1,7 +1,10 @@
-# aws-summit-demo
+# aws-summit-2023-demo
 
-- [open a cloud9 to develop your code](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/amazon-linux-install.html)
-[https://tinyurl.com/2tjze7vv](https://tinyurl.com/2tjze7vv)
+## 1. Provison Devlopment environment in Cloud9 (optional)
+
+- open a cloud9 to develop your code
+
+[install Java 17](https://docs.aws.amazon.com/corretto/latest/corretto-17-ug/amazon-linux-install.html)
 
 ```bash
 # Java 17
@@ -12,24 +15,24 @@ sudo yum install java-17-amazon-corretto-devel
 sudo alternatives --config java
 ```
 
+## 2. Setup repository 
 - install [git-remote-codecommit](https://pypi.org/project/git-remote-codecommit/) using python
 
 ```
 pip install git-remote-codecommit
 ```
 
-- Clone the webgoat https://github.com/WebGoat/WebGoat to local
-[https://tinyurl.com/57fa8atd](https://tinyurl.com/57fa8atd)
-
-```
-git clone https://github.com/WebGoat/WebGoat.git
-git checkout v2023.4
-```
-
 - create codecommit repo
 
 ```
 aws codecommit create-repository --repository-name aws-summit --repository-description "Test web goat" --tags Team=aws
+```
+
+- Clone the webgoat https://github.com/WebGoat/WebGoat to local
+
+```
+git clone https://github.com/WebGoat/WebGoat.git
+git checkout v2023.4 # released version
 ```
 
 - config remote repo
@@ -44,24 +47,28 @@ git remote add codecommit codecommit::ap-southeast-1://aws-summit
 git push codecommit
 ```
 
-- [Create a CodeCommit repository association (CodeGuru Reviewer console)](https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/create-codecommit-association.html)
+## 3. Associate your repository and run the CodeGuru analysis
 
-[https://tinyurl.com/yc2k42eu](https://tinyurl.com/yc2k42eu)
+[Create a CodeCommit repository association (CodeGuru Reviewer console)](https://docs.aws.amazon.com/codeguru/latest/reviewer-ug/create-codecommit-association.html)
 
-Running webgoat
+## 4. Compile webgoat source code
 
 ```bash
 ./mvnw clean install
 docker build -f Dockerfile . -t webgoat/webgoat
 ```
 
+## 5. Running webgoat
+
 ```bash
-# run java
+# run by java
 ./mvnw spring-boot:run
-# run docker
+# run by docker
 docker run --name webgoat -it -p 127.0.0.1:8080:8080 -p 127.0.0.1:9090:9090 webgoat/webgoat
 ```
 
+## 6. Quick testing command
+
 ```bash
-curl http://localhost:8080/WebGoat
+curl -L http://localhost:8080/WebGoat
 ```
